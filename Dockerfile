@@ -32,7 +32,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN composer install --no-dev --optimize-autoloader
 
 # Install JS dependencies and build assets
-RUN npm install && npm run build
+RUN npm install && chmod +x node_modules/.bin/vite && npm run build
 
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html \
