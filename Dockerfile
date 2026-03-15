@@ -1,32 +1,41 @@
-FROM php:8.2-apache
+# Use official PHP image with required extensions
+FROM php:8.2.12-fpm
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libpq-dev \
-    zip \
-    unzip \
     git \
+    unzip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
     curl \
-    && docker-php-ext-install pdo pdo_pgsql pgsql \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer globally
+COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
+# Set working directory
 WORKDIR /var/www/html
 
+# Copy application files
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+# Install Node.js and npm for Tailwind
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Install PHP dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# Install JS dependencies and build assets
+RUN npm install && npm run build
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN a2enmod rewrite
+# Set permissions for Laravel
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 80
+# Expose port 8080 for Render
+EXPOSE 8080
 
+# Start PHP-FPM server
+CMD ["php-fpm"]
