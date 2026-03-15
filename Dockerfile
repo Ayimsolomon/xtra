@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     curl \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo pdo_pgsql pgsql zip mbstring exif pcntl bcmath gd
+
+# RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Install Composer globally
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
