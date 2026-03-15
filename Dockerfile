@@ -26,6 +26,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 # Install JS dependencies and build assets
 RUN npm install && npm run build
@@ -34,6 +35,7 @@ RUN npm install && npm run build
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
+RUN php artisan migrate --force && php artisan serve --host=0.0.0 --port=8080
 # Expose port 8080 for Render
 EXPOSE 8080
 
