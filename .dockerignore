@@ -3,10 +3,6 @@
 .env
 .env.*
 node_modules
-vendor
-storage
-public/storage
-bootstrap/cache
 *.log
 *.sqlite
 *.pid
@@ -22,8 +18,6 @@ composer.lock
 package-lock.json
 test-results/
 coverage/
-dist/
-build/
 docker-compose.yml
 .docker/
 .git
