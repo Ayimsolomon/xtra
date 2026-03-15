@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libpq-dev \
+    libzip-dev \
     curl \
     && docker-php-ext-install pdo pdo_pgsql pgsql zip mbstring exif pcntl bcmath gd
 # RUN docker-php-ext-install pdo pdo_pgsql pgsql
