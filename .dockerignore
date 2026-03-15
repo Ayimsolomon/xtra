@@ -1,24 +1,23 @@
-# Laravel / TALL Stack .dockerignore
+# # Laravel / TALL Stack .dockerignore
 
-.env
-.env.*
-node_modules
-*.log
-*.sqlite
-*.pid
-*.seed
-*.bak
-*.tmp
-.idea/
-.vscode/
-.DS_Store
-npm-debug.log
-yarn-error.log
-composer.lock
-package-lock.json
-test-results/
-coverage/
-docker-compose.yml
-.docker/
-.git
-.gitignore
+# .env
+# .env.*
+# node_modules
+# *.log
+# *.sqlite
+# *.pid
+# *.seed
+# *.bak
+# *.tmp
+# .idea/
+# .vscode/
+# .DS_Store
+# npm-debug.log
+# yarn-error.log
+# composer.lock
+# package-lock.json
+# test-results/
+# coverage/
+# docker-compose.yml
+# .docker/
+# .git
