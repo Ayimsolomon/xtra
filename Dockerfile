@@ -35,9 +35,5 @@ RUN npm install && npm run build
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-RUN php artisan migrate --force && php artisan serve --host=0.0.0 --port=8080
-# Expose port 8080 for Render
 EXPOSE 8080
-
-# Start PHP-FPM server
-CMD ["php-fpm"]
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080
